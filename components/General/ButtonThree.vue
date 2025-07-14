@@ -19,18 +19,23 @@ const props = defineProps({
 <style lang="scss" scoped module>
 .button {
     font-family: var(--font-02);
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 500;
     color: var(--color-black);
     text-align: center;
-    text-transform: uppercase;
     width: fit-content;
     min-width: 8rem;
     padding: 1rem 1.5rem;
-    border-radius: 0.4rem;
+    border-radius: 5rem;
     position: relative;
     z-index: 1;
     overflow: hidden;
+
+    @include media(mobile) {
+        font-size: 1rem;
+        min-width: auto;
+        padding: 0.75rem 1rem;
+    }
 
     &:before {
         content: "";

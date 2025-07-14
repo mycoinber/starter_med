@@ -151,7 +151,7 @@ const siteDomain = `${url.protocol}//${url.host}`;
     font-weight: 500;
     line-height: 120%;
     transition: color 0.3s;
-    color: var(--color-white);
+    color: var(--color-black);
     text-align: center;
 
     @include media(mobile) {

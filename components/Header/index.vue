@@ -60,8 +60,9 @@ const toggleMenu = () => {
           </ul>
         </nav>
 
-        <ClientOnly>
-          <div :class="styles.buttons">
+
+        <div :class="styles.buttons">
+          <ClientOnly>
             <GeneralButton :data="{
               link: '/go',
               title: t('login'),
@@ -75,8 +76,9 @@ const toggleMenu = () => {
               target: '_blank',
               rel: 'noopener noreferrer',
             }" />
-          </div>
-        </ClientOnly>
+          </ClientOnly>
+        </div>
+
 
         <div :class="styles.burger" @click="toggleMenu">
           <span :class="{ [styles.active]: isMenuOpen }"></span>
@@ -99,11 +101,14 @@ const toggleMenu = () => {
 
 <style lang="scss" scoped module>
 .header {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: fixed;
+  top: 0.875rem;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
-  width: 100%;
+  width: calc(100% - 2rem);
+  background: var(--color-white);
+  border-radius: 2.25rem;
 
   @include media(mobile) {
     &.active {
@@ -146,7 +151,7 @@ const toggleMenu = () => {
 }
 
 .nav {
-  max-width: 60%;
+  min-width: 50%;
 
   @include media(mobile) {
     display: none;
@@ -156,9 +161,11 @@ const toggleMenu = () => {
 .navList {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 2rem;
   list-style: none;
   margin: 0;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -167,9 +174,10 @@ const toggleMenu = () => {
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    color: var(--color-white);
+    color: var(--color-black);
     transition: color 0.3s ease-in-out;
     text-align: center;
+
 
     &:hover {
       color: var(--color-01);
@@ -191,7 +199,7 @@ const toggleMenu = () => {
 
   span {
     height: 0.125rem;
-    background: white;
+    background: var(--color-01);
     transition: 0.3s;
     border-radius: 0.063rem;
   }
@@ -223,7 +231,7 @@ const toggleMenu = () => {
   padding: 5rem 1rem 1rem;
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: all 0.3s ease-in-out;
 
   flex-direction: column;
 
@@ -236,7 +244,7 @@ const toggleMenu = () => {
       margin-bottom: 1rem;
 
       a {
-        color: white;
+        color: var(--color-black);
         font-size: 1rem;
         font-weight: 500;
       }
@@ -266,5 +274,12 @@ const toggleMenu = () => {
   @include media(mobile) {
     display: none;
   }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 19rem;
 }
 </style>

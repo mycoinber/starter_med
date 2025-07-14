@@ -19,35 +19,29 @@ const props = defineProps({
 <style lang="scss" scoped module>
 .button {
     font-family: var(--font-02);
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: 500;
-    color: var(--color-white);
+    color: var(--color-01);
     text-align: center;
-    text-transform: uppercase;
     width: fit-content;
     min-width: 8rem;
     padding: 1rem 1.5rem;
-    border-radius: 0.4rem;
+    border-radius: 5rem;
     position: relative;
     z-index: 1;
     overflow: hidden;
+    border: 0.125rem solid var(--color-01);
+    transition: all 0.3s ease-in-out;
 
-    &:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--color-02);
-        z-index: -1;
-        transition: filter 0.3s;
+    @include media(mobile) {
+        font-size: 1rem;
+        min-width: auto;
+        padding: 0.75rem 1rem;
     }
 
     &:hover {
-        &::before {
-            filter: brightness(0.7);
-        }
+        background: var(--color-02);
+        color: var(--color-white);
     }
 }
 </style>

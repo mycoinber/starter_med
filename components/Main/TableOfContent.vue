@@ -55,9 +55,9 @@ function toggle() {
 .wrapper {
   width: 100%;
   padding: 1rem;
-  border: 0.063rem solid var(--border);
+  border: 0.063rem solid var(--color-01);
   border-radius: 0.625rem;
-  background: var(--background-02);
+  background: var(--color-01);
 }
 
 .head {
@@ -69,12 +69,13 @@ function toggle() {
 }
 
 .title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-family: var(--font-02);
-  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-white);
 
   @include media(mobile) {
-    font-size: 1.25rem;
+    font-size: 1rem;
   }
 }
 
@@ -82,6 +83,7 @@ function toggle() {
   display: inline-block;
   transition: transform 0.3s;
   font-size: 1.5rem;
+  color: var(--color-white);
 
   &.active {
     transform: rotate(180deg);
@@ -128,7 +130,6 @@ function toggle() {
   }
 
   &:hover {
-    color: var(--color-01);
     opacity: 1;
   }
 

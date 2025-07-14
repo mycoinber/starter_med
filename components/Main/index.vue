@@ -64,18 +64,9 @@ if (import.meta.server) {
   </div>
 
   <section :class="[styles.block, data.offer ? styles.offer : '']">
-    <div class="container">
-      <DelayHydration>
-        <MainHero v-if="!isBot" :data="data" />
-      </DelayHydration>
-
-      <div :class="styles.img">
-        <NuxtImg v-if="data.offer?.background?.[0]?.path" :src="`unsplash${data.offer.background[0].path}`" :alt="data.offer.background[0].alt || 'hero'" width="800" loading="lazy"
-          quality="75" sizes="xs:100vw sm:100vw md:50vw lg:50vw xl:33vw" />
-        <NuxtImg v-else :src="`unsplash${data.hero[0]?.path}`" :alt="data.hero[0]?.alt || 'hero'" width="800" loading="lazy"
-          quality="75" sizes="xs:100vw sm:100vw md:50vw lg:50vw xl:33vw" />
-      </div>
-    </div>
+    <DelayHydration>
+      <MainHero v-if="!isBot" :data="data" />
+    </DelayHydration>
   </section>
 
   <MainTitle v-if="data.article.H1" :data="data" />
@@ -103,76 +94,5 @@ if (import.meta.server) {
   justify-content: center;
   background-color: var(--background-01);
   z-index: 9999;
-}
-
-.block {
-  &.offer {
-    width: 100%;
-    height: 65rem;
-    position: relative;
-    z-index: 2;
-    margin-bottom: 4rem;
-
-    @include media(mobile) {
-      min-height: 120vh;
-      height: fit-content;
-    }
-
-    .img {
-      opacity: 1;
-    }
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20%;
-    z-index: -1;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.68) 50%, rgba(255, 255, 255, 0) 100%);
-    pointer-events: none;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 70%;
-    z-index: -1;
-    background: linear-gradient(to bottom,
-        rgba(255, 255, 255, 0),
-        var(--background-01));
-    pointer-events: none;
-  }
-}
-
-.img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-
-    @include media(mobile) {
-      object-fit: contain;
-      object-position: top center;
-    }
-  }
-}
-
-.offer {
-  font-size: large;
 }
 </style>
