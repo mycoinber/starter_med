@@ -1,55 +1,54 @@
 <script setup>
-import { ref, useSSRContext, onMounted, useCssModule } from "vue";
-import { parse } from "node-html-parser";
+import { ref, useSSRContext, onMounted, useCssModule } from 'vue'
+import { parse } from 'node-html-parser'
 
-const styles = useCssModule();
+const styles = useCssModule()
 
 const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
   },
-});
+})
 
-const ssrContext = import.meta.server ? useSSRContext() : null;
-const contentHtml = ref("");
+const ssrContext = import.meta.server ? useSSRContext() : null
+const contentHtml = ref('')
 
 const parseHTML = (html) => {
   if (import.meta.server) {
-    return parse(html);
+    return parse(html)
   } else {
-    const parser = new DOMParser();
-    return parser.parseFromString(html, "text/html");
+    const parser = new DOMParser()
+    return parser.parseFromString(html, 'text/html')
   }
-};
+}
 
 const processHtmlContent = (htmlString) => {
-  const doc = parseHTML(htmlString);
+  const doc = parseHTML(htmlString)
 
   const addClasses = (selector, styleClass) => {
-    const elements = doc.querySelectorAll(selector);
+    const elements = doc.querySelectorAll(selector)
     elements.forEach((el) => {
       if (import.meta.server) {
-        const classAttr = el.getAttribute("class") || "";
-        el.setAttribute("class", `${classAttr} ${styles[styleClass]}`);
+        const classAttr = el.getAttribute('class') || ''
+        el.setAttribute('class', `${classAttr} ${styles[styleClass]}`)
       } else {
-        el.classList.add(styles[styleClass]);
+        el.classList.add(styles[styleClass])
       }
-    });
-  };
-  return import.meta.server ? doc.toString() : doc.body.innerHTML;
-};
+    })
+  }
+  return import.meta.server ? doc.toString() : doc.body.innerHTML
+}
 
-if (import.meta.server && props.data.type === "section") {
-  const modifiedHtml = processHtmlContent(props.data.content);
-  ssrContext.modifiedHtml = modifiedHtml;
-  contentHtml.value = modifiedHtml;
+if (import.meta.server && props.data.type === 'section') {
+  const modifiedHtml = processHtmlContent(props.data.content)
+  ssrContext.modifiedHtml = modifiedHtml
+  contentHtml.value = modifiedHtml
 }
 
 onMounted(() => {
-  contentHtml.value =
-    ssrContext?.modifiedHtml || processHtmlContent(props.data.content);
-});
+  contentHtml.value = ssrContext?.modifiedHtml || processHtmlContent(props.data.content)
+})
 </script>
 
 <template>
@@ -59,8 +58,14 @@ onMounted(() => {
         <div v-html="contentHtml" :class="styles.content"></div>
 
         <div v-if="data.imageUrl?.length" :class="styles.img">
-          <NuxtImg :src="`unsplash${data.imageUrl[0]?.path}`" :alt="data.imageUrl[0]?.alt || 'image'" width="400"
-            loading="lazy" quality="25" sizes="xs:100vw sm:100vw md:50vw lg:50vw xl:33vw" />
+          <NuxtImg
+            :src="`unsplash${data.imageUrl[0]?.path}`"
+            :alt="data.imageUrl[0]?.alt || 'image'"
+            width="400"
+            loading="lazy"
+            quality="25"
+            sizes="xs:100vw sm:100vw md:50vw lg:50vw xl:33vw"
+          />
         </div>
       </div>
     </div>

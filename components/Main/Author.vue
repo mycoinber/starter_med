@@ -1,36 +1,35 @@
 <script setup>
-import { useCssModule } from "vue";
+import { useCssModule } from 'vue'
 
-const styles = useCssModule();
+const styles = useCssModule()
 
-import { computed } from "vue";
+import { computed } from 'vue'
 
 const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
   },
-});
-
+})
 
 const publishedDateISO = computed(() => {
-  const date = new Date(props.data.createdAt);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const date = new Date(props.data.createdAt)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
 
-  return `${year}-${month}-${day} ${hours}:${minutes}`; // 2001-05-15 19:00
-});
+  return `${year}-${month}-${day} ${hours}:${minutes}` // 2001-05-15 19:00
+})
 
 const formattedDate = computed(() => {
-  return new Date(props.data.createdAt).toLocaleDateString("ru-RU", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
-});
+  return new Date(props.data.createdAt).toLocaleDateString('ru-RU', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+})
 </script>
 
 <template>
@@ -39,8 +38,13 @@ const formattedDate = computed(() => {
       <div :class="styles.wrapper">
         <div :class="styles.main">
           <div :class="styles.img">
-            <NuxtImg v-for="(image, imgIndex) in data.aiauthor.picture" :key="imgIndex" :src="`unsplash${image?.path}`"
-              :alt="image?.alt || 'author'" width="400" />
+            <NuxtImg
+              v-for="(image, imgIndex) in data.aiauthor.picture"
+              :key="imgIndex"
+              :src="`unsplash${image?.path}`"
+              :alt="image?.alt || 'author'"
+              width="400"
+            />
           </div>
 
           <div :class="styles.content">
@@ -51,9 +55,7 @@ const formattedDate = computed(() => {
                   {{ data.aiauthor?.name?.last }}
                 </h3>
 
-                <time :datetime="publishedDateISO" :class="styles.date">{{
-                  formattedDate
-                }}</time>
+                <time :datetime="publishedDateISO" :class="styles.date">{{ formattedDate }}</time>
               </div>
 
               <span :class="styles.subtitle">{{ $t('author') }}</span>
@@ -118,6 +120,14 @@ const formattedDate = computed(() => {
   border: 0.063rem solid var(--border);
   overflow: hidden;
 
+  @include media(mobile) {
+    width: 4rem;
+    min-width: 4rem;
+    height: 4rem;
+    min-height: 4rem;
+    margin: auto 0;
+  }
+
   img {
     width: 100%;
     height: 100%;
@@ -134,12 +144,17 @@ const formattedDate = computed(() => {
 .info {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  justify-content: center;
 }
 
 .title {
   margin: 0;
   padding: 0;
+  font-size: 1.5rem;
+
+  @include media(mobile) {
+    font-size: 1.125rem;
+  }
 }
 
 .subtitle {

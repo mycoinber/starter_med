@@ -44,5 +44,9 @@ const hasError = error.value;
 .article {
   max-width: 70%;
   margin: 0 auto;
+
+  @media screen and (max-width: 767px){
+    max-width: 100%;
+  }
 }
 </style>
