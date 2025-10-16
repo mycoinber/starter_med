@@ -41,20 +41,12 @@ const hasError = error.value;
 </template>
 
 <style lang="scss" scoped module>
-// .article {
-//   position: relative;
+.article {
+  max-width: 70%;
+  margin: 0 auto;
 
-//   &::after {
-//     content: "";
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     display: block;
-//     width: 100%;
-//     height: 100%;
-//     background-size: cover;
-//     background-repeat: no-repeat;
-//     background-image: url("/ornament.svg");
-//     z-index: -2;
-//   }
-// }</style>
+  @media screen and (max-width: 767px){
+    max-width: 100%;
+  }
+}
+</style>

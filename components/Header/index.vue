@@ -1,44 +1,44 @@
 <script setup>
-import { useCssModule } from "vue";
-import { ref } from 'vue';
-const styles = useCssModule();
+import { useCssModule } from 'vue'
+import { ref } from 'vue'
+const styles = useCssModule()
 
-import { useI18n } from 'vue-i18n';
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
+const { t } = useI18n()
 
 const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
   },
-});
+})
 
 const navigationLinks = computed(() => {
   return props.data?.pages
     .map((page) => {
-      let title = page.head.title;
+      let title = page.head.title
       if (title.match(/[-–:|]/)) {
-        title = title.split(/[-–:|]/)[0].trim();
+        title = title.split(/[-–:|]/)[0].trim()
       }
 
       return {
         name: page.homePage ? t('home') : title,
-        slug: page.homePage ? "" : page.slug,
-      };
+        slug: page.homePage ? '' : page.slug,
+      }
     })
     .sort((a, b) => {
-      if (a.name === t('home')) return -1;
-      if (b.name === t('home')) return 1;
-      return 0;
-    });
-});
+      if (a.name === t('home')) return -1
+      if (b.name === t('home')) return 1
+      return 0
+    })
+})
 
-const isMenuOpen = ref(false);
+const isMenuOpen = ref(false)
 
 const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
-};
+  isMenuOpen.value = !isMenuOpen.value
+}
 </script>
 
 <template>
@@ -47,8 +47,15 @@ const toggleMenu = () => {
       <div :class="styles.wrapper">
         <div :class="styles.logo">
           <NuxtLink to="/">
-            <NuxtImg v-if="data.logo?.length" :src="`unsplash${data.logo[0]?.path}`" :alt="data.logo[0]?.alt || 'logo'"
-              quality="25" preload loading="lazy" :placeholder="[32, 32]" />
+            <NuxtImg
+              v-if="data.logo?.length"
+              :src="`unsplash${data.logo[0]?.path}`"
+              :alt="data.logo[0]?.alt || 'logo'"
+              quality="25"
+              preload
+              loading="lazy"
+              :placeholder="[32, 32]"
+            />
           </NuxtLink>
         </div>
 
@@ -60,32 +67,33 @@ const toggleMenu = () => {
           </ul>
         </nav>
 
-
         <div :class="styles.buttons">
           <ClientOnly>
-            <GeneralButton :data="{
-              link: '/go',
-              title: t('login'),
-              target: '_blank',
-              rel: 'noopener noreferrer',
-            }" />
+            <GeneralButton
+              :data="{
+                link: '/go',
+                title: t('login'),
+                target: '_blank',
+                rel: 'noopener noreferrer',
+              }"
+            />
 
-            <GeneralButtonTwo :data="{
-              link: '/go',
-              title: t('registration'),
-              target: '_blank',
-              rel: 'noopener noreferrer',
-            }" />
+            <GeneralButtonTwo
+              :data="{
+                link: '/go',
+                title: t('registration'),
+                target: '_blank',
+                rel: 'noopener noreferrer',
+              }"
+            />
           </ClientOnly>
         </div>
-
 
         <div :class="styles.burger" @click="toggleMenu">
           <span :class="{ [styles.active]: isMenuOpen }"></span>
           <span :class="{ [styles.active]: isMenuOpen }"></span>
           <span :class="{ [styles.active]: isMenuOpen }"></span>
         </div>
-
 
         <nav v-if="isMenuOpen" :class="styles.mobileMenu">
           <ul>
@@ -178,7 +186,6 @@ const toggleMenu = () => {
     transition: color 0.3s ease-in-out;
     text-align: center;
 
-
     &:hover {
       color: var(--color-01);
     }
@@ -269,17 +276,13 @@ const toggleMenu = () => {
 .buttons {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  width: 19rem;
 
   @include media(mobile) {
     display: none;
+    width: fit-content;
   }
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 19rem;
 }
 </style>
