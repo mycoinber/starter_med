@@ -103,6 +103,8 @@ onMounted(() => {
   flex: 1;
   border-radius: 0.625rem;
   overflow: hidden;
+  height: fit-content;
+  aspect-ratio: 1/1;
 
   img {
     width: 100%;
