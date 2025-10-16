@@ -77,6 +77,10 @@ const formattedDate = computed(() => {
   border: 0.063rem solid var(--color-white);
   border-radius: 0.625rem;
   background: var(--color-white);
+
+  @include media(mobile) {
+    padding: 0.5rem;
+  }
 }
 
 .main {
