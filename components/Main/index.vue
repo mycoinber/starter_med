@@ -1,33 +1,32 @@
 <script setup>
-import { useCssModule } from "vue";
+import { useCssModule } from 'vue'
 
-const styles = useCssModule();
+const styles = useCssModule()
 
 const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
   },
-});
+})
 
-console.log("props", props.data);
+console.log('props', props.data)
 
 const faqs = computed(() => {
   return (
     props.data.article.blocks?.find(
       (item) => item.faqs && Array.isArray(item.faqs) && item.faqs.length > 0
     ) || null
-  );
-});
+  )
+})
 
 const reviews = computed(() => {
   return (
     props.data.article.blocks?.find(
-      (item) =>
-        item.reviews && Array.isArray(item.reviews) && item.reviews.length > 0
+      (item) => item.reviews && Array.isArray(item.reviews) && item.reviews.length > 0
     ) || null
-  );
-});
+  )
+})
 
 const sections = computed(() => {
   return (
@@ -35,26 +34,24 @@ const sections = computed(() => {
       (item) =>
         !(
           (item.faqs && Array.isArray(item.faqs) && item.faqs.length > 0) ||
-          (item.reviews &&
-            Array.isArray(item.reviews) &&
-            item.reviews.length > 0)
+          (item.reviews && Array.isArray(item.reviews) && item.reviews.length > 0)
         )
     ) || []
-  );
-});
+  )
+})
 
-const isLoaded = ref(false);
-const isBot = useState("isBot", () => false);
+const isLoaded = ref(false)
+const isBot = useState('isBot', () => false)
 
 if (import.meta.server) {
-  const event = useRequestEvent();
-  isBot.value = event.context.isBot || false;
+  const event = useRequestEvent()
+  isBot.value = event.context.isBot || false
 } else {
   onMounted(() => {
     setTimeout(() => {
-      isLoaded.value = true;
-    }, 100);
-  });
+      isLoaded.value = true
+    }, 100)
+  })
 }
 </script>
 
