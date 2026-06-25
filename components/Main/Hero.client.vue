@@ -26,6 +26,8 @@ const heroSections = computed(() => {
 });
 
 const fetchOffer = async () => {
+  if (!props.data.offer?._id) return null;
+
   const response = await $axios.get(`/public/offer/${props.data.offer._id}`);
   return response.data;
 };
@@ -39,7 +41,31 @@ const {
 } = useQuery({
   queryKey: computed(() => ["offers", props.data.offer]),
   queryFn: fetchOffer,
+  enabled: computed(() => Boolean(props.data.offer?._id)),
 });
+
+const getMediaUrl = (media) => {
+  const path = media?.path;
+  if (!path) return "";
+  if (/^https?:\/\//.test(path)) return path;
+
+  const host = String(backHost || "").replace(/\/$/, "");
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${host}${normalizedPath}`;
+};
+
+const offerImageUrl = computed(() => {
+  const media =
+    offer.value?.mainImage?.[0] ||
+    offer.value?.background?.[0] ||
+    heroSections.value?.[0]?.images?.[0];
+
+  return getMediaUrl(media) || "/hero.png";
+});
+
+const offerImageStyle = computed(() => ({
+  backgroundImage: `url("${offerImageUrl.value}")`,
+}));
 
 watch(offer, (newData) => {
 });
@@ -47,21 +73,18 @@ watch(offer, (newData) => {
 
 <template>
   <div v-if="offer" :class="styles.wrapper">
-    <div :class="styles.content">
+    <a
+      v-if="offer.link"
+      :href="offer.link"
+      :class="styles.img"
+      :style="offerImageStyle"
+      :aria-label="offer.label || t('play')"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+    </a>
 
-      <span :class="styles.title">{{ offer.label }}</span>
-
-      <span :class="styles.span">{{ offer.title }}</span>
-
-      <GeneralButton :data="{
-        link: offer.link || '',
-        title: offer.button1 || t('play'),
-        target: '_blank',
-        rel: 'noopener noreferrer',
-      }" :class="styles.contentButton" />
-    </div>
-
-    <div :class="styles.img">
+    <div v-else :class="styles.img" :style="offerImageStyle">
     </div>
   </div>
 </template>
@@ -74,44 +97,15 @@ watch(offer, (newData) => {
   margin-bottom: 2.5rem;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  max-width: 40.625rem;
-  padding-top: 5rem;
-  margin-bottom: 2.5rem;
-
-  @include media(mobile) {
-    max-width: 100%;
-    padding-top: 3rem;
-  }
-}
-
-.title {
-  font-size: 4.25rem;
-  font-weight: 500;
-  color: var(--color-black);
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.span {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--color-gray);
-  margin-bottom: 2.5rem;
-  text-align: center;
-}
-
 .img {
   background-image: url('/hero.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  display: block;
   width: 100%;
   height: 50rem;
+  cursor: pointer;
 
   @include media(mobile) {
     height: 20rem;
