@@ -80,6 +80,10 @@ if (import.meta.server) {
 </template>
 
 <style lang="scss" scoped module>
+.offer {
+  padding-top: 0 !important;
+}
+
 .loaderContainer {
   position: fixed;
   top: 0;
