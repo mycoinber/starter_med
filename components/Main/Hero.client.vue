@@ -94,6 +94,9 @@ watch(offer, (newData) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   margin-bottom: 2.5rem;
 }
 
@@ -103,12 +106,12 @@ watch(offer, (newData) => {
   background-position: center;
   background-repeat: no-repeat;
   display: block;
-  width: 100%;
-  height: 50rem;
+  width: 100vw;
+  height: 100vh;
   cursor: pointer;
 
   @include media(mobile) {
-    height: 20rem;
+    height: 100vh;
   }
 }
 </style>
